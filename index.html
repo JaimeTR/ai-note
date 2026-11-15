@@ -159,7 +159,7 @@
   </div>
 </div>
 
-<!-- Checkout propio: un solo producto, dos pasos -->
+<!-- Checkout propio: un solo producto, tres pasos -->
 <div class="ck" id="ck" hidden>
   <div class="ck-back" data-ck-close></div>
   <form class="ck-box" id="ckForm" role="dialog" aria-modal="true" aria-labelledby="ckTitle" novalidate>
@@ -169,10 +169,11 @@
     </header>
     <ol class="steps" id="steps" aria-label="Progreso">
       <li class="on"><i>1</i>Tus datos</li>
-      <li><i>2</i>Recojo y pago</li>
+      <li><i>2</i>Recojo</li>
+      <li><i>3</i>Pago</li>
     </ol>
 
-    <!-- Paso 1 -->
+    <!-- Paso 1: datos -->
     <section class="ck-body" id="ckStep1">
       <div class="ck-prod">
         <img src="/assets/memoai-producto.webp" alt="" width="64" height="64">
@@ -192,8 +193,9 @@
       <button class="btn btn-primary ck-go" id="ckNext" type="button">CONTINUAR</button>
     </section>
 
-    <!-- Paso 2 -->
+    <!-- Paso 2: donde recoge -->
     <section class="ck-body" id="ckStep2" hidden>
+      <p class="sec">Dónde recoges tu pedido</p>
       <div class="two">
         <label>Departamento<select name="dep"><option value="">Elige…</option></select></label>
         <label>Provincia<select name="prov" disabled><option value="">Elige…</option></select></label>
@@ -203,32 +205,41 @@
         <p class="sec">Elige tu agencia Shalom</p>
         <div class="ag-list" id="agList" role="radiogroup" aria-label="Agencias Shalom"></div>
       </div>
+      <p class="ck-err" id="ckErr2" role="alert" hidden></p>
+      <div class="ck-nav">
+        <button class="btn ghost" id="ckBack2" type="button">Atrás</button>
+        <button class="btn btn-primary ck-go" id="ckNext2" type="button">CONTINUAR AL PAGO</button>
+      </div>
+    </section>
 
+    <!-- Paso 3: pago -->
+    <section class="ck-body" id="ckStep3" hidden>
       <p class="sec">Cómo pagas</p>
-      <label class="opt"><input type="radio" name="pago" value="yape_plin" checked><span><b>Yape o Plin</b><small>Pagas desde tu app y nos envías el comprobante</small></span></label>
-      <label class="opt"><input type="radio" name="pago" value="whatsapp"><span><b>Contraentrega</b><small>Coordinamos por WhatsApp y pagas al recibir</small></span></label>
-
+      <label class="opt"><input type="radio" name="pago" value="yape_plin" checked><span><b>Yape o Plin</b><small>Pagas desde tu app con el número o el QR</small></span></label>
+      <label class="opt"><input type="radio" name="pago" value="whatsapp"><span><b>Contraentrega</b><small>Pagas al recibir; coordinamos por WhatsApp</small></span></label>
+      <div class="paypanel" id="payPanel" aria-live="polite"></div>
       <dl class="ck-tot">
         <div><dt id="tCant">1 × NoteAI</dt><dd id="tSub">S/ 299.00</dd></div>
         <div><dt>Envío</dt><dd class="gratis">Gratis</dd></div>
         <div class="grand"><dt>Total</dt><dd id="tTot">S/ 299.00</dd></div>
       </dl>
-      <p class="ck-err" id="ckErr2" role="alert" hidden></p>
+      <p class="ck-err" id="ckErr3" role="alert" hidden></p>
       <div class="ck-nav">
-        <button class="btn ghost" id="ckBack" type="button">Atrás</button>
-        <button class="btn btn-primary ck-go" id="ckGo" type="submit">CONFIRMAR PEDIDO</button>
+        <button class="btn ghost" id="ckBack3" type="button">Atrás</button>
+        <button class="btn btn-primary ck-go" id="ckGo" type="submit">YA PAGUÉ</button>
       </div>
+      <a class="btn btn-wa ck-wa" id="ckWa" target="_blank" rel="noopener">CONSULTAR POR WHATSAPP</a>
       <p class="ck-note">Sin devolución por cambio de opinión; sí cubrimos defectos y daños de transporte.</p>
     </section>
 
-    <!-- Listo -->
-    <section class="ck-body" id="ckStep3" hidden>
+    <!-- Gracias -->
+    <section class="ck-body" id="ckStep4" hidden>
       <div class="ok">✓</div>
-      <h3 id="okTitulo">¡Pedido recibido!</h3>
+      <h3 id="okTitulo">¡Gracias por tu compra!</h3>
       <p class="ok-id">Pedido <b id="okId"></b> · Total <b id="okTotal"></b></p>
+      <p class="ok-msg" id="okMsg"></p>
       <p class="ok-ag" id="okAg"></p>
-      <div class="pay" id="okPago"></div>
-      <a class="btn btn-wa" id="okWa" target="_blank" rel="noopener">ENVIAR POR WHATSAPP</a>
+      <a class="btn btn-wa" id="okWa" target="_blank" rel="noopener">ESCRIBIR POR WHATSAPP</a>
       <button type="button" class="ck-link" data-ck-close>Cerrar</button>
     </section>
   </form>

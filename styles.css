@@ -186,7 +186,7 @@ h1 em{font-weight:600}
 .ck-note{font-size:.72rem;color:var(--muted);text-align:center}
 .ck-body[hidden]{display:none}
 .ok{width:3.6rem;height:3.6rem;border-radius:50%;background:#dcfce7;color:#15803d;display:grid;place-items:center;font-size:1.8rem;font-weight:800;margin:.5rem auto 0}
-#ckStep3{text-align:center}#ckStep3 h3{font-size:1.4rem}
+#ckStep4{text-align:center}#ckStep4 h3{font-size:1.4rem}
 .ok-id{color:var(--muted);font-size:.9rem}
 .pay{display:grid;gap:.6rem;background:#f6f6fb;border-radius:1rem;padding:1rem;text-align:left;font-size:.9rem}
 .pay img{width:9rem;height:9rem;border-radius:.8rem;margin:.3rem auto;object-fit:cover}
@@ -216,6 +216,24 @@ h1 em{font-weight:600}
 .ok-ag:empty{display:none}
 .qrs{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;text-align:center;font-size:.8rem}
 .qrs img{width:100%;max-width:8.5rem;height:auto;aspect-ratio:1;border-radius:.8rem;margin:.3rem auto 0;object-fit:cover}
+
+/* Selects con flecha propia, a la derecha con aire */
+.ck-body select{-webkit-appearance:none;appearance:none;padding-right:2.6rem;cursor:pointer;
+  background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233d34bc' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right .95rem center/1.05rem}
+.ck-body select:disabled{opacity:.55;cursor:not-allowed}
+.ck-body select:focus{background-color:#fff}
+/* Pago */
+.paypanel{display:grid;gap:.7rem}
+.pnote{font-size:.85rem;color:var(--muted);background:#f6f6fb;border-radius:.9rem;padding:.8rem .9rem}
+.pcard{display:grid;grid-template-columns:1fr auto;gap:.3rem .9rem;align-items:center;border:1px solid rgba(10,10,10,.12);border-radius:1rem;padding:.8rem .9rem;background:#fff}
+.pcard .pb{font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.pcard .pn{font-size:1.35rem;font-weight:800;letter-spacing:.03em;font-variant-numeric:tabular-nums}
+.pcard .pname{font-size:.8rem;color:var(--muted)}
+.pcard img{grid-row:1/span 4;grid-column:2;width:6.6rem;height:6.6rem;border-radius:.8rem;object-fit:cover}
+.copy{justify-self:start;margin-top:.2rem;border:1px solid rgba(61,52,188,.3);background:rgba(61,52,188,.06);color:var(--accent);border-radius:99px;padding:.3rem .8rem;font-size:.75rem;font-weight:700;cursor:pointer}
+.copy.ok2{background:#dcfce7;color:#15803d;border-color:#86efac}
+.ck-wa{width:100%}
+.ok-msg{font-size:.92rem;color:var(--fg)}
 @media(min-width:30rem){.two{grid-template-columns:1fr 1fr}.device{width:15rem;height:20rem}.d-wave{height:11.5rem}}
 @media(min-width:48rem){
   body{padding-bottom:0}.bar{display:none}
