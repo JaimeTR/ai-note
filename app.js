@@ -1,8 +1,8 @@
 (function () {
   var WHATSAPP = "51975646074";
-  var MENSAJE = "Hola, quiero comprar AI Note (S/ 299). ¿Me ayudan a coordinar mi pedido?";
+  var MENSAJE = "Hola, quiero comprar NoteAI (S/ 299). ¿Me ayudan a coordinar mi pedido?";
   var UNA_HORA = 3600;
-  var KEY = "ainote_fin";
+  var KEY = "noteai_fin";
 
   function track(evento, datos) {
     try { if (window.ttq) window.ttq.track(evento, datos); } catch (e) {}
@@ -25,7 +25,7 @@
     pasar.forEach(function (v, k) { url.searchParams.set(k, v); });
     a.href = url.href;
     a.addEventListener("click", function (e) {
-      track("InitiateCheckout", { content_id: "memoai", content_name: "AI Note", value: 299, currency: "PEN" });
+      track("InitiateCheckout", { content_id: "memoai", content_name: "NoteAI", value: 299, currency: "PEN" });
       // Un respiro para que el pixel envie el evento antes de salir de la pagina.
       if (e.ctrlKey || e.metaKey || e.shiftKey || e.button) return;
       e.preventDefault();

@@ -9,7 +9,9 @@ a{color:inherit}
 .topbar{background:var(--accent);color:#fff;text-align:center;font-size:.8rem;font-weight:600;padding:.5rem 1rem}
 .header{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.25rem;max-width:72rem;margin:auto}
 .logo{font-family:Braze,sans-serif;font-weight:700;font-size:1.4rem;text-decoration:none;letter-spacing:-.01em}
-.logo-ai{background:linear-gradient(135deg,#1c1640,#3d34bc 50%,#5b53d0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo-ai{position:relative;display:inline-block;background:linear-gradient(135deg,#1c1640,#3d34bc 50%,#5b53d0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo-ai svg{position:absolute;top:-.3em;right:-.8em;width:.65em;height:.65em;stroke:var(--accent2)}
+.logo{margin-right:.8em}
 .header-wa{font-size:.85rem;font-weight:500;color:var(--muted);text-decoration:none}
 .header-wa:hover{color:var(--fg)}
 .hero{display:grid;gap:2rem;align-items:center;max-width:72rem;margin:auto;padding:1.5rem 1.25rem 3rem;text-align:center;background:radial-gradient(ellipse at top,rgba(61,52,188,.07),transparent 60%)}

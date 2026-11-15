@@ -1,6 +1,6 @@
-# AI Note — página de campaña
+# NoteAI — página de campaña
 
-Sitio estático (HTML, CSS y un poco de JS, sin framework) en `ainote.devmarkpe.com`, desplegado en Vercel desde `main`.
+Sitio estático (HTML, CSS y un poco de JS, sin framework) en `noteai.devmarkpe.com`, desplegado en Vercel desde `main`.
 
 - **COMPRAR AHORA**: abre el checkout de la tienda (`store.devmarkpe.com/producto/memoai?comprar=1`) y conserva `utm_*` y `ttclid`.
 - **COMPRA DIRECTA**: WhatsApp al 51975646074 con el pedido escrito.
