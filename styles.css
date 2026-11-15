@@ -92,7 +92,7 @@ h1 em{font-weight:600}
 /* Secciones */
 .section{max-width:72rem;margin:auto;padding:2.5rem 1.25rem}
 .grid3{display:grid;gap:1rem}
-.h2{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:500;letter-spacing:-.02em;text-align:center;margin-bottom:1.5rem}
+.h2{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:500;letter-spacing:-.02em;line-height:1.15;text-align:center;margin-bottom:1.5rem}
 .eyebrow{text-align:center;color:var(--accent);font-weight:700;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.6rem}
 .eyebrow.left,.h2.left{text-align:left}
 .benefits .h2{max-width:40rem;margin-left:auto;margin-right:auto}
@@ -253,10 +253,12 @@ h1 em{font-weight:600}
   .flash{padding:3rem 2rem}
   .show{grid-template-columns:minmax(18rem,22rem) 1fr;gap:5rem;max-width:68rem;margin:auto}
   .show-info{text-align:left}.show-info .cta{margin-left:0}
-  .h2.left{font-size:clamp(2rem,3.2vw,2.8rem)}
+  .h2.left{font-size:clamp(1.7rem,2.3vw,2.2rem)}
   .ck{align-items:center}.ck-box{border-radius:1.6rem;max-height:90vh}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.device,.chip,.d-wave u,.d-led{animation:none!important}}
 
 @media(min-width:80rem){html{font-size:17px}}
 @media(min-width:96rem){html{font-size:18px}}
+
+@media(min-width:64rem){.show-info .h2.left{white-space:nowrap}}
