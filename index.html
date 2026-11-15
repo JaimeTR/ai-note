@@ -13,7 +13,6 @@
 <meta property="og:type" content="website">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/assets/Braze.otf" as="font" type="font/otf" crossorigin>
-<link rel="preload" href="/assets/memoai-producto.webp" as="image" fetchpriority="high">
 <link rel="stylesheet" href="/styles.css">
 <!-- TikTok Pixel (devmarkpe.com) -->
 <script>
@@ -26,29 +25,50 @@
 </head>
 <body>
 
-<div class="topbar" id="topbar" hidden>⚡ 60% OFF · la oferta termina en <b class="mono" data-cuenta>01:00:00</b></div>
-
-<header class="header">
-  <a class="logo" href="/" aria-label="NoteAI">NOTE<span class="logo-ai">AI<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4M22 5h-4M4 17v2M5 18H3"/></svg></span></a>
-  <a class="header-wa" data-wa href="#" target="_blank" rel="noopener">Escríbenos</a>
-</header>
+<!-- Pre-encabezado giratorio: una frase a la vez, para apurar la compra -->
+<div class="ticker" aria-live="polite">
+  <p class="on"><span>🚚</span> Envío gratis a todo el Perú</p>
+  <p><span>⚡</span> 60% OFF · la oferta termina en <b class="mono" data-cuenta>01:00:00</b></p>
+  <p><span>🛡️</span> Paga al recibir: contraentrega disponible</p>
+  <p><span>🔥</span> Precio de lanzamiento, hasta que se acabe el tiempo</p>
+</div>
 
 <main>
-  <section class="hero">
-    <div class="hero-copy">
-      <h1>Deja de tomar apuntes,<br><em>concéntrate en lo que realmente importa</em></h1>
-      <p class="sub"><b>NoteAI</b> es la grabadora inteligente con IA que <b>transcribe, resume y organiza</b> automáticamente tus <b>reuniones, clases y entrevistas</b>.</p>
-      <p class="badge">🚚 Envío gratis a todo el Perú</p>
-      <div class="price">
-        <s>S/ 755</s><strong>S/ 299</strong><span class="off">60% OFF</span>
+  <section class="stage">
+    <div class="hero">
+      <div class="hero-copy">
+        <h1>Deja de tomar apuntes,<br><em>concéntrate en lo que realmente importa</em></h1>
+        <p class="sub"><b>NoteAI</b> es la grabadora inteligente con IA que <b>transcribe, resume y organiza</b> automáticamente tus <b>reuniones, clases y entrevistas</b>.</p>
+        <p class="badge">🚚 Envío gratis a todo el Perú</p>
+        <div class="price">
+          <s>S/ 755</s><strong>S/ 299</strong><span class="off">60% OFF</span>
+        </div>
+        <div class="cta">
+          <a class="btn btn-primary" data-comprar href="https://store.devmarkpe.com/producto/memoai?comprar=1">COMPRAR AHORA</a>
+          <a class="btn btn-wa" data-wa data-contact href="#" target="_blank" rel="noopener">COMPRA DIRECTA</a>
+        </div>
+        <p class="micro">Precisión superior al 95% · 64GB · 20h de batería · Contraentrega disponible</p>
       </div>
-      <div class="cta">
-        <a class="btn btn-primary" data-comprar href="https://store.devmarkpe.com/producto/memoai?comprar=1">COMPRAR AHORA</a>
-        <a class="btn btn-wa" data-wa data-contact href="#" target="_blank" rel="noopener">COMPRA DIRECTA</a>
+
+      <div class="visual">
+        <a class="logo" href="/" aria-label="NoteAI">NOTE<span class="logo-ai">AI<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4M22 5h-4M4 17v2M5 18H3"/></svg></span></a>
+        <div class="stagebox">
+          <button class="device" id="device" type="button" aria-pressed="false" aria-label="Probar el efecto de grabación">
+            <span class="d-top"><span class="d-brand"><i>AI</i> NOTE</span><span class="d-led"><b></b></span></span>
+            <span class="d-wave" aria-hidden="true">
+              <u style="--h:30%"></u><u style="--h:45%"></u><u style="--h:35%"></u><u style="--h:55%"></u><u style="--h:40%"></u><u style="--h:60%"></u><u style="--h:42%"></u><u style="--h:50%"></u><u style="--h:32%"></u><u style="--h:58%"></u><u style="--h:38%"></u><u style="--h:48%"></u><u style="--h:34%"></u><u style="--h:52%"></u><u style="--h:40%"></u>
+            </span>
+            <span class="d-name">NOTEAI</span>
+          </button>
+          <div class="chip c1"><span class="ci"><svg viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M10 9H8M16 13H8M16 17H8"/></svg></span><div><b>Transcribe</b><small>en tiempo real</small></div></div>
+          <div class="chip c2"><span class="ci"><svg viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg></span><div><b>Resume</b><small>con IA</small></div></div>
+          <div class="chip c3"><span class="ci"><svg viewBox="0 0 24 24"><path d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"/></svg></span><div><b>Organiza</b><small>por tema</small></div></div>
+          <div class="chip c4"><span class="ci"><svg viewBox="0 0 24 24"><path d="M2 10v3M6 6v11M10 3v18M14 8v7M18 5v13M22 10v3"/></svg></span><div><b>Audio HD</b><small>alta calidad</small></div></div>
+          <div class="chip c5"><span class="ci"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="10" rx="2"/><path d="M22 11v2M6 11v2M10 11v2M14 11v2"/></svg></span><div><b>20h</b><small>de batería</small></div></div>
+        </div>
+        <p class="hint" id="hint">Toca el producto</p>
       </div>
-      <p class="micro">Precisión superior al 95% · 64GB · 20h de batería · Contraentrega disponible</p>
     </div>
-    <img class="hero-img" src="/assets/memoai-producto.webp" alt="NoteAI, grabadora inteligente con IA" width="900" height="900" fetchpriority="high">
   </section>
 
   <section class="section benefits">
@@ -78,8 +98,28 @@
     </div>
   </section>
 
-  <section class="section video">
-    <video controls playsinline preload="none" poster="/assets/memoai-producto.webp" src="/assets/memoai-demo.mp4"></video>
+  <section class="section showcase">
+    <div class="show">
+      <div class="phone">
+        <video id="demo" playsinline preload="none" poster="/assets/video-portada.jpg" src="/assets/memoai-demo.mp4"></video>
+        <button class="play" id="play" type="button" aria-label="Ver el video de NoteAI"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z" fill="currentColor"/></svg></button>
+      </div>
+      <div class="show-info">
+        <p class="eyebrow left">Míralo en acción</p>
+        <h2 class="h2 left">Así llega tu <em>NoteAI</em></h2>
+        <p class="lead">Mira cómo es por dentro: la caja, el equipo y lo fácil que es empezar a grabar el mismo día que lo recibes.</p>
+        <ul class="ticks">
+          <li><b>Listo para usar:</b> lo enciendes, abres la app y grabas.</li>
+          <li><b>Equipo físico con 64 GB:</b> miles de horas de audio guardadas.</li>
+          <li><b>App en Android y iOS:</b> transcripción y resumen automáticos.</li>
+          <li><b>Llega a todo el Perú:</b> envío gratis y pagas al recibir.</li>
+        </ul>
+        <div class="cta">
+          <a class="btn btn-primary" data-comprar href="https://store.devmarkpe.com/producto/memoai?comprar=1">COMPRAR AHORA</a>
+          <a class="btn btn-wa" data-wa data-contact href="#" target="_blank" rel="noopener">COMPRA DIRECTA</a>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="section" id="descuento">
@@ -100,29 +140,6 @@
       <ul class="flash-incl"><li>🎙️ Grabadora NoteAI</li><li>💾 64 GB</li><li>📱 App con IA</li><li>🚚 Envío gratis</li><li>🛡️ Contraentrega</li></ul>
     </div>
   </section>
-
-  <section class="section" id="oferta">
-    <div class="offer">
-      <h2 class="h2">Llévate <em>NoteAI</em> hoy</h2>
-      <p class="timer">La oferta termina en <b class="mono pill" data-cuenta>01:00:00</b></p>
-      <div class="price big"><s>S/ 755</s><strong>S/ 299</strong></div>
-      <p class="muted">Pago único, sin suscripciones · <b class="accent">60% OFF</b></p>
-      <div class="cta center">
-        <a class="btn btn-primary" data-comprar href="https://store.devmarkpe.com/producto/memoai?comprar=1">COMPRAR AHORA</a>
-        <a class="btn btn-wa" data-wa data-contact href="#" target="_blank" rel="noopener">COMPRA DIRECTA</a>
-      </div>
-      <ul class="chips"><li>🚚 Envío gratis</li><li>🛡️ Contraentrega</li><li>💬 Soporte por WhatsApp</li></ul>
-      <p class="tiny">YAPE · PLIN · CONTRAENTREGA</p>
-    </div>
-  </section>
-
-  <section class="section faq">
-    <h2 class="h2">Preguntas <em>frecuentes</em></h2>
-    <details><summary>¿Cómo pago?</summary><p>Con Yape, Plin o contraentrega. Coordinamos el pago por WhatsApp y confirmamos tu pedido antes del envío.</p></details>
-    <details><summary>¿Cuánto demora el envío?</summary><p>Es gratis a todo el Perú: Lima en hasta 2 días y provincias en unos 3 días hábiles.</p></details>
-    <details><summary>¿Necesita internet?</summary><p>Grabar funciona sin internet. Para transcribir y resumir se necesita conexión; puedes grabar sin red y sincronizar después.</p></details>
-    <details><summary>¿Puedo devolverlo?</summary><p>No aceptamos devoluciones por cambio de opinión. Sí cubrimos defectos de fábrica o daños de transporte reportados dentro de las 48 horas de recibido.</p></details>
-  </section>
 </main>
 
 <footer class="footer">
@@ -141,6 +158,78 @@
     <a class="btn btn-wa sm" data-wa data-contact href="#" target="_blank" rel="noopener">WhatsApp</a>
     <a class="btn btn-primary sm" data-comprar href="https://store.devmarkpe.com/producto/memoai?comprar=1">COMPRAR</a>
   </div>
+</div>
+
+<!-- Checkout propio: un solo producto, una sola pantalla -->
+<div class="ck" id="ck" hidden>
+  <div class="ck-back" data-ck-close></div>
+  <form class="ck-box" id="ckForm" role="dialog" aria-modal="true" aria-labelledby="ckTitle" novalidate>
+    <header class="ck-head">
+      <h2 id="ckTitle">Finaliza tu pedido</h2>
+      <button type="button" class="ck-x" data-ck-close aria-label="Cerrar">×</button>
+    </header>
+
+    <div class="ck-body" id="ckStep1">
+      <div class="ck-prod">
+        <img src="/assets/memoai-producto.webp" alt="" width="64" height="64">
+        <div class="ck-prod-t"><b>NoteAI</b><small>Grabadora inteligente con IA</small><span><s>S/ 755</s> <strong>S/ 299</strong></span></div>
+        <div class="qty" role="group" aria-label="Cantidad">
+          <button type="button" id="qMenos" aria-label="Quitar una unidad">−</button><output id="qVal">1</output><button type="button" id="qMas" aria-label="Agregar una unidad">+</button>
+        </div>
+      </div>
+
+      <fieldset class="ck-f">
+        <legend>Tus datos</legend>
+        <label>Nombre completo<input name="nombre" autocomplete="name" required maxlength="160"></label>
+        <div class="two">
+          <label>Celular<input name="celular" type="tel" inputmode="tel" autocomplete="tel" required maxlength="40"></label>
+          <label>Correo<input name="correo" type="email" autocomplete="email" required maxlength="160"></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="ck-f">
+        <legend>Envío</legend>
+        <label class="opt"><input type="radio" name="zona" value="nacional" checked><span><b>Todo el Perú</b> · Gratis<small>Recojo en agencia Shalom · 2 a 3 días hábiles</small></span></label>
+        <label class="opt"><input type="radio" name="zona" value="lima_fast"><span><b>Lima Metropolitana</b> · S/ 10<small>Express a domicilio · 1 día hábil</small></span></label>
+        <div id="zNac">
+          <div class="two">
+            <label>Departamento<select name="dep"><option value="">Elige…</option></select></label>
+            <label>Provincia<select name="prov" disabled><option value="">Elige…</option></select></label>
+          </div>
+          <label>DNI (para recoger en agencia)<input name="dni" inputmode="numeric" maxlength="12" autocomplete="off"></label>
+        </div>
+        <div id="zLima" hidden>
+          <label>Distrito<select name="dist"><option value="">Elige…</option></select></label>
+          <label>Dirección y referencia<input name="dir" autocomplete="street-address" maxlength="260" placeholder="Calle, número, referencia"></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="ck-f">
+        <legend>Pago</legend>
+        <label class="opt"><input type="radio" name="pago" value="yape" checked><span><b>Yape</b><small>Pagas a nuestro número y envías el comprobante</small></span></label>
+        <label class="opt"><input type="radio" name="pago" value="plin"><span><b>Plin</b><small>Transfieres desde tu app Plin</small></span></label>
+        <label class="opt"><input type="radio" name="pago" value="whatsapp"><span><b>Contraentrega</b><small>Coordinamos por WhatsApp y pagas al recibir</small></span></label>
+      </fieldset>
+
+      <dl class="ck-tot">
+        <div><dt>Subtotal</dt><dd id="tSub">S/ 299.00</dd></div>
+        <div><dt>Envío</dt><dd id="tEnv">Gratis</dd></div>
+        <div class="grand"><dt>Total</dt><dd id="tTot">S/ 299.00</dd></div>
+      </dl>
+      <p class="ck-err" id="ckErr" role="alert" hidden></p>
+      <button class="btn btn-primary ck-go" id="ckGo" type="submit">CONFIRMAR PEDIDO</button>
+      <p class="ck-note">Tu pedido se registra al instante. Sin devolución por cambio de opinión; sí cubrimos defectos y daños de transporte.</p>
+    </div>
+
+    <div class="ck-body" id="ckStep2" hidden>
+      <div class="ok">✓</div>
+      <h3 id="okTitulo">¡Pedido recibido!</h3>
+      <p class="ok-id">Pedido <b id="okId"></b> · Total <b id="okTotal"></b></p>
+      <div class="pay" id="okPago"></div>
+      <a class="btn btn-wa" id="okWa" target="_blank" rel="noopener">ENVIAR POR WHATSAPP</a>
+      <button type="button" class="ck-link" data-ck-close>Cerrar</button>
+    </div>
+  </form>
 </div>
 
 <script src="/app.js" defer></script>
