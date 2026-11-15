@@ -54,6 +54,11 @@
   setInterval(tick, 1000);
   $("#anio").textContent = new Date().getFullYear();
 
+  // --- La barra fija del celular se esconde mientras se ve el bloque de oferta (ya tiene sus propios botones)
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (es) { $("#bar").classList.toggle("off", es[0].isIntersecting); }, { threshold: 0.35 }).observe($("#descuento"));
+  }
+
   // --- Producto: toca para probar el efecto de grabacion
   var device = $("#device");
   device.addEventListener("click", function () {
