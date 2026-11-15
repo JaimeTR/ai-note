@@ -6,6 +6,9 @@
   var API = "https://store.devmarkpe.com";
   if (location.hostname === "localhost") API = new URLSearchParams(location.search).get("api") || API;
   var PRECIO = 299, MAX = 5;
+  // Respaldo: si no se pueden leer los datos de pago de la tienda (ERP), igual se muestran el QR y los numeros.
+  // ponytail: estos datos pueden quedar viejos; la fuente real es Ajustes de tienda en el ERP.
+  var PAGO_RESPALDO = { yapeNumber: "975646074", plinNumber: "975646074", yapeName: "Jaime Tarazona" };
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var pad = function (n) { return String(n).padStart(2, "0"); };
@@ -237,14 +240,10 @@
       return;
     }
     panel.appendChild(el("p", "Paga " + soles(total()) + " por Yape o Plin y luego toca «Ya pagué»:", "pnote"));
-    if (ajustes) {
-      panel.appendChild(tarjetaPago("Yape", "yape", ajustes.yapeNumber, ajustes.yapeName));
-      panel.appendChild(tarjetaPago("Plin", "plin", ajustes.plinNumber, ajustes.yapeName));
-    } else {
-      var n = el("p", "Cargando los datos de pago…", "pnote"); panel.appendChild(n);
-      cargarAjustes().then(function () { if (actual === 3 && f.pago.value === pago) dibujarPago(); });
-      if (ajustes === null) setTimeout(function () { if (!ajustes && n.parentNode) n.textContent = "No pudimos cargar el número de pago. Escríbenos por WhatsApp y te lo enviamos."; }, 4000);
-    }
+    var d = ajustes || PAGO_RESPALDO;
+    panel.appendChild(tarjetaPago("Yape", "yape", d.yapeNumber, d.yapeName));
+    panel.appendChild(tarjetaPago("Plin", "plin", d.plinNumber, d.yapeName));
+    if (!ajustes) cargarAjustes().then(function () { if (ajustes && actual === 3 && f.pago.value === pago) dibujarPago(); });
   }
   $$("input[name=pago]", form).forEach(function (r) { r.addEventListener("change", dibujarPago); });
 
