@@ -49,6 +49,12 @@
     var s = Math.max(0, Math.ceil((fin - Date.now()) / 1000));
     var t = pad(Math.floor(s / 3600)) + ":" + pad(Math.floor((s % 3600) / 60)) + ":" + pad(s % 60);
     nodos.forEach(function (n) { n.textContent = t; });
+    var H = document.querySelector("[data-h]");
+    if (H) {
+      H.textContent = pad(Math.floor(s / 3600));
+      document.querySelector("[data-m]").textContent = pad(Math.floor((s % 3600) / 60));
+      document.querySelector("[data-s]").textContent = pad(s % 60);
+    }
   }
   tick();
   setInterval(tick, 1000);
