@@ -142,17 +142,32 @@
   });
   $("#ckBack").addEventListener("click", function () { paso(1); });
 
-  // Envio: departamento -> provincia -> agencia Shalom (con direccion y horario)
-  function listaAgencias() {
+  // Envio: departamento -> provincia -> distrito -> agencias Shalom de ese distrito (con direccion y horario)
+  function deProvincia() {
     var d = f.dep.value, p = f.prov.value;
     return (d && p && shalom && shalom[d] && shalom[d][p]) || [];
   }
+  function listaAgencias() {
+    var z = f.dist.value;
+    return deProvincia().filter(function (a) { return a.zona === z; });
+  }
+  function dibujarDistritos() {
+    var ags = deProvincia(), vistos = {}, zonas = [];
+    ags.forEach(function (a) { if (!vistos[a.zona]) { vistos[a.zona] = 1; zonas.push(a.zona); } });
+    zonas.sort(alfa);
+    opciones(f.dist, zonas, "Elige tu distrito…");
+    f.dist.disabled = !zonas.length;
+    $("#distLbl").hidden = !(f.dep.value && f.prov.value && zonas.length);
+    if (zonas.length === 1) f.dist.value = zonas[0]; // una sola agencia en la provincia: ya viene elegida
+    dibujarAgencias();
+  }
   function dibujarAgencias() {
-    var caja = $("#agencias"), lista = $("#agList"), ags = listaAgencias();
+    var caja = $("#agencias"), lista = $("#agList"), ags = listaAgencias(), hayProv = f.dep.value && f.prov.value;
     lista.innerHTML = ""; agencia = null;
-    caja.hidden = !(f.dep.value && f.prov.value);
+    var sinAgencias = hayProv && shalom && !deProvincia().length;
+    caja.hidden = !(sinAgencias || f.dist.value);
     if (caja.hidden) return;
-    if (!ags.length) {
+    if (sinAgencias) {
       lista.appendChild(el("p", "No hay agencia Shalom registrada en esta provincia todavía: coordinamos el punto de entrega más cercano contigo por WhatsApp.", "ag-none"));
       return;
     }
@@ -160,7 +175,7 @@
       var rotulo = el("label", "", "ag");
       var r = el("input"); r.type = "radio"; r.name = "agencia"; r.value = String(i);
       var t = el("span");
-      t.appendChild(el("b", a.zona));
+      t.appendChild(el("b", ags.length > 1 ? a.zona + " (" + (i + 1) + ")" : a.zona));
       t.appendChild(el("small", a.direccion));
       t.appendChild(el("small", a.horario + (a.telefono ? " · " + a.telefono : "")));
       rotulo.appendChild(r); rotulo.appendChild(t); lista.appendChild(rotulo);
@@ -171,9 +186,10 @@
   f.dep.addEventListener("change", function () {
     var d = f.dep.value;
     opciones(f.prov, d && ubigeo ? Object.keys(ubigeo[d]).sort(alfa) : [], "Elige…");
-    f.prov.disabled = !d; dibujarAgencias();
+    f.prov.disabled = !d; dibujarDistritos();
   });
-  f.prov.addEventListener("change", dibujarAgencias);
+  f.prov.addEventListener("change", dibujarDistritos);
+  f.dist.addEventListener("change", dibujarAgencias);
 
   // Confirmar
   form.addEventListener("submit", function (e) {
@@ -183,7 +199,9 @@
     if (marcar(f.dep, !f.dep.value)) mal.push("el departamento");
     if (marcar(f.prov, !f.prov.value)) mal.push("la provincia");
     if (mal.length) { error(2, "Elige " + mal.join(" y ") + "."); return; }
-    if (listaAgencias().length && !agencia) { error(2, "Elige la agencia Shalom donde recogerás tu pedido."); return; }
+    if (deProvincia().length && !f.dist.value) { marcar(f.dist, true); error(2, "Elige tu distrito para ver las agencias Shalom."); return; }
+    marcar(f.dist, false);
+    if (deProvincia().length && !agencia) { error(2, "Elige la agencia Shalom donde recogerás tu pedido."); return; }
     error(2, "");
     var pago = f.pago.value;
     var body = {
