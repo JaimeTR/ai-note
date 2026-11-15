@@ -47,7 +47,6 @@
           <a class="btn btn-primary" data-comprar href="https://store.devmarkpe.com/producto/memoai?comprar=1">COMPRAR AHORA</a>
           <a class="btn btn-wa" data-wa data-contact href="#" target="_blank" rel="noopener">COMPRA DIRECTA</a>
         </div>
-        <p class="micro">Precisión superior al 95% · 64GB · 20h de batería · Contraentrega disponible</p>
       </div>
 
       <div class="visual">
@@ -160,7 +159,7 @@
   </div>
 </div>
 
-<!-- Checkout propio: un solo producto, una sola pantalla -->
+<!-- Checkout propio: un solo producto, dos pasos -->
 <div class="ck" id="ck" hidden>
   <div class="ck-back" data-ck-close></div>
   <form class="ck-box" id="ckForm" role="dialog" aria-modal="true" aria-labelledby="ckTitle" novalidate>
@@ -168,8 +167,13 @@
       <h2 id="ckTitle">Finaliza tu pedido</h2>
       <button type="button" class="ck-x" data-ck-close aria-label="Cerrar">×</button>
     </header>
+    <ol class="steps" id="steps" aria-label="Progreso">
+      <li class="on"><i>1</i>Tus datos</li>
+      <li><i>2</i>Recojo y pago</li>
+    </ol>
 
-    <div class="ck-body" id="ckStep1">
+    <!-- Paso 1 -->
+    <section class="ck-body" id="ckStep1">
       <div class="ck-prod">
         <img src="/assets/memoai-producto.webp" alt="" width="64" height="64">
         <div class="ck-prod-t"><b>NoteAI</b><small>Grabadora inteligente con IA</small><span><s>S/ 755</s> <strong>S/ 299</strong></span></div>
@@ -177,58 +181,55 @@
           <button type="button" id="qMenos" aria-label="Quitar una unidad">−</button><output id="qVal">1</output><button type="button" id="qMas" aria-label="Agregar una unidad">+</button>
         </div>
       </div>
+      <p class="free">🚚 Envío gratis a todo el Perú</p>
+      <label>Nombre completo<input name="nombre" autocomplete="name" required maxlength="160"></label>
+      <div class="two">
+        <label>Celular<input name="celular" type="tel" inputmode="tel" autocomplete="tel" required maxlength="40"></label>
+        <label>DNI<input name="dni" inputmode="numeric" maxlength="12" autocomplete="off" placeholder="Para recoger tu pedido"></label>
+      </div>
+      <label>Correo<input name="correo" type="email" autocomplete="email" required maxlength="160" placeholder="Aquí te llega la confirmación"></label>
+      <p class="ck-err" id="ckErr1" role="alert" hidden></p>
+      <button class="btn btn-primary ck-go" id="ckNext" type="button">CONTINUAR</button>
+    </section>
 
-      <fieldset class="ck-f">
-        <legend>Tus datos</legend>
-        <label>Nombre completo<input name="nombre" autocomplete="name" required maxlength="160"></label>
-        <div class="two">
-          <label>Celular<input name="celular" type="tel" inputmode="tel" autocomplete="tel" required maxlength="40"></label>
-          <label>Correo<input name="correo" type="email" autocomplete="email" required maxlength="160"></label>
-        </div>
-      </fieldset>
+    <!-- Paso 2 -->
+    <section class="ck-body" id="ckStep2" hidden>
+      <div class="two">
+        <label>Departamento<select name="dep"><option value="">Elige…</option></select></label>
+        <label>Provincia<select name="prov" disabled><option value="">Elige…</option></select></label>
+      </div>
+      <div class="agencias" id="agencias" hidden>
+        <p class="sec">Elige tu agencia Shalom</p>
+        <div class="ag-list" id="agList" role="radiogroup" aria-label="Agencias Shalom"></div>
+      </div>
 
-      <fieldset class="ck-f">
-        <legend>Envío</legend>
-        <label class="opt"><input type="radio" name="zona" value="nacional" checked><span><b>Todo el Perú</b> · Gratis<small>Recojo en agencia Shalom · 2 a 3 días hábiles</small></span></label>
-        <label class="opt"><input type="radio" name="zona" value="lima_fast"><span><b>Lima Metropolitana</b> · S/ 10<small>Express a domicilio · 1 día hábil</small></span></label>
-        <div id="zNac">
-          <div class="two">
-            <label>Departamento<select name="dep"><option value="">Elige…</option></select></label>
-            <label>Provincia<select name="prov" disabled><option value="">Elige…</option></select></label>
-          </div>
-          <label>DNI (para recoger en agencia)<input name="dni" inputmode="numeric" maxlength="12" autocomplete="off"></label>
-        </div>
-        <div id="zLima" hidden>
-          <label>Distrito<select name="dist"><option value="">Elige…</option></select></label>
-          <label>Dirección y referencia<input name="dir" autocomplete="street-address" maxlength="260" placeholder="Calle, número, referencia"></label>
-        </div>
-      </fieldset>
-
-      <fieldset class="ck-f">
-        <legend>Pago</legend>
-        <label class="opt"><input type="radio" name="pago" value="yape" checked><span><b>Yape</b><small>Pagas a nuestro número y envías el comprobante</small></span></label>
-        <label class="opt"><input type="radio" name="pago" value="plin"><span><b>Plin</b><small>Transfieres desde tu app Plin</small></span></label>
-        <label class="opt"><input type="radio" name="pago" value="whatsapp"><span><b>Contraentrega</b><small>Coordinamos por WhatsApp y pagas al recibir</small></span></label>
-      </fieldset>
+      <p class="sec">Cómo pagas</p>
+      <label class="opt"><input type="radio" name="pago" value="yape_plin" checked><span><b>Yape o Plin</b><small>Pagas desde tu app y nos envías el comprobante</small></span></label>
+      <label class="opt"><input type="radio" name="pago" value="whatsapp"><span><b>Contraentrega</b><small>Coordinamos por WhatsApp y pagas al recibir</small></span></label>
 
       <dl class="ck-tot">
-        <div><dt>Subtotal</dt><dd id="tSub">S/ 299.00</dd></div>
-        <div><dt>Envío</dt><dd id="tEnv">Gratis</dd></div>
+        <div><dt id="tCant">1 × NoteAI</dt><dd id="tSub">S/ 299.00</dd></div>
+        <div><dt>Envío</dt><dd class="gratis">Gratis</dd></div>
         <div class="grand"><dt>Total</dt><dd id="tTot">S/ 299.00</dd></div>
       </dl>
-      <p class="ck-err" id="ckErr" role="alert" hidden></p>
-      <button class="btn btn-primary ck-go" id="ckGo" type="submit">CONFIRMAR PEDIDO</button>
-      <p class="ck-note">Tu pedido se registra al instante. Sin devolución por cambio de opinión; sí cubrimos defectos y daños de transporte.</p>
-    </div>
+      <p class="ck-err" id="ckErr2" role="alert" hidden></p>
+      <div class="ck-nav">
+        <button class="btn ghost" id="ckBack" type="button">Atrás</button>
+        <button class="btn btn-primary ck-go" id="ckGo" type="submit">CONFIRMAR PEDIDO</button>
+      </div>
+      <p class="ck-note">Sin devolución por cambio de opinión; sí cubrimos defectos y daños de transporte.</p>
+    </section>
 
-    <div class="ck-body" id="ckStep2" hidden>
+    <!-- Listo -->
+    <section class="ck-body" id="ckStep3" hidden>
       <div class="ok">✓</div>
       <h3 id="okTitulo">¡Pedido recibido!</h3>
       <p class="ok-id">Pedido <b id="okId"></b> · Total <b id="okTotal"></b></p>
+      <p class="ok-ag" id="okAg"></p>
       <div class="pay" id="okPago"></div>
       <a class="btn btn-wa" id="okWa" target="_blank" rel="noopener">ENVIAR POR WHATSAPP</a>
       <button type="button" class="ck-link" data-ck-close>Cerrar</button>
-    </div>
+    </section>
   </form>
 </div>
 

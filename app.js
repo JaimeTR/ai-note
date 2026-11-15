@@ -5,11 +5,12 @@
   // En localhost se puede probar contra otra tienda con ?api=http://localhost:3500
   var API = "https://store.devmarkpe.com";
   if (location.hostname === "localhost") API = new URLSearchParams(location.search).get("api") || API;
-  var PRECIO = 299, ENVIO_LIMA = 10, MAX = 5;
+  var PRECIO = 299, MAX = 5;
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var pad = function (n) { return String(n).padStart(2, "0"); };
   var soles = function (n) { return "S/ " + n.toFixed(2); };
+  var alfa = function (a, b) { return a.localeCompare(b, "es"); };
 
   function track(evento, datos) {
     try { if (window.ttq) window.ttq.track(evento, datos); } catch (e) {}
@@ -69,145 +70,175 @@
     video.play();
   });
 
-  // --- Checkout propio
-  var ck = $("#ck"), form = $("#ckForm"), err = $("#ckErr"), go = $("#ckGo");
-  var cantidad = 1, ubigeo = null, ajustes = null, abierto = false;
+  // --- Checkout propio en dos pasos
+  var ck = $("#ck"), form = $("#ckForm"), f = form.elements, go = $("#ckGo");
+  var cantidad = 1, ubigeo = null, shalom = null, ajustes = null, abierto = false, agencia = null;
 
-  function zona() { return form.elements.zona.value; }
-  function totales() {
-    var sub = PRECIO * cantidad, env = zona() === "lima_fast" ? ENVIO_LIMA : 0;
-    $("#qVal").textContent = cantidad;
-    $("#tSub").textContent = soles(sub);
-    $("#tEnv").textContent = env ? soles(env) : "Gratis";
-    $("#tTot").textContent = soles(sub + env);
-  }
+  function el(tag, texto, cls) { var n = document.createElement(tag); if (texto) n.textContent = texto; if (cls) n.className = cls; return n; }
   function opciones(sel, lista, vacio) {
     sel.innerHTML = "";
-    var o = document.createElement("option"); o.value = ""; o.textContent = vacio; sel.appendChild(o);
-    lista.forEach(function (t) { var e = document.createElement("option"); e.value = t; e.textContent = t; sel.appendChild(e); });
+    sel.appendChild(el("option", vacio)).value = "";
+    lista.forEach(function (t) { sel.appendChild(el("option", t)).value = t; });
   }
-  function cargarUbigeo() {
-    if (ubigeo) return;
-    fetch("/assets/peru-ubigeo.json").then(function (r) { return r.json(); }).then(function (d) {
-      ubigeo = d;
-      opciones(form.elements.dep, Object.keys(d).sort(function (a, b) { return a.localeCompare(b, "es"); }), "Elige…");
-      opciones(form.elements.dist, (d.Lima && d.Lima.Lima) || [], "Elige…");
+  function error(n, t) { var e = $("#ckErr" + n); e.textContent = t; e.hidden = !t; }
+  function marcar(campo, mal) { campo.classList.toggle("invalid", mal); return mal; }
+
+  function totales() {
+    $("#qVal").textContent = cantidad;
+    $("#tCant").textContent = cantidad + " × NoteAI";
+    $("#tSub").textContent = soles(PRECIO * cantidad);
+    $("#tTot").textContent = soles(PRECIO * cantidad); // envio gratis a todo el Peru
+  }
+  // Datos que se cargan una vez al abrir: ubigeo (departamentos y provincias), agencias Shalom y datos de pago de la tienda.
+  function cargar() {
+    if (!ubigeo) fetch("/assets/peru-ubigeo.json").then(function (r) { return r.json(); }).then(function (d) {
+      ubigeo = d; opciones(f.dep, Object.keys(d).sort(alfa), "Elige…");
     }).catch(function () {});
+    if (!shalom) fetch("/assets/shalom-agencias.json").then(function (r) { return r.json(); }).then(function (d) { shalom = d; }).catch(function () {});
+    if (!ajustes) fetch(API + "/api/settings").then(function (r) { return r.json(); }).then(function (d) { ajustes = d.settings; }).catch(function () {});
   }
-  function cargarAjustes() {
-    if (ajustes) return;
-    fetch(API + "/api/settings").then(function (r) { return r.json(); }).then(function (d) { ajustes = d.settings; }).catch(function () {});
+
+  function paso(n) {
+    ["ckStep1", "ckStep2", "ckStep3"].forEach(function (id, i) { $("#" + id).hidden = i !== n - 1; });
+    $$("#steps li").forEach(function (li, i) {
+      li.classList.toggle("on", i === n - 1);
+      li.classList.toggle("done", i < n - 1 || n === 3);
+    });
+    $("#steps").hidden = n === 3;
+    ck.querySelector(".ck-box").scrollTop = 0;
   }
-  function mostrarError(t) { err.textContent = t; err.hidden = !t; if (t) err.scrollIntoView({ block: "nearest" }); }
 
   function abrir() {
     if (abierto) return;
     abierto = true;
-    $("#ckStep1").hidden = false; $("#ckStep2").hidden = true; mostrarError("");
+    error(1, ""); error(2, ""); paso(1);
     ck.hidden = false;
     document.body.style.overflow = "hidden";
-    cargarUbigeo(); cargarAjustes(); totales();
+    cargar(); totales();
     track("InitiateCheckout", { content_id: "memoai", content_name: "NoteAI", value: PRECIO * cantidad, currency: "PEN" });
-    setTimeout(function () { form.elements.nombre.focus(); }, 50);
+    setTimeout(function () { f.nombre.focus(); }, 60);
   }
-  function cerrar() {
-    abierto = false; ck.hidden = true; document.body.style.overflow = "";
-  }
-  $$("[data-comprar]").forEach(function (a) {
-    a.addEventListener("click", function (e) { e.preventDefault(); abrir(); });
-  });
+  function cerrar() { abierto = false; ck.hidden = true; document.body.style.overflow = ""; }
+  $$("[data-comprar]").forEach(function (a) { a.addEventListener("click", function (e) { e.preventDefault(); abrir(); }); });
   $$("[data-ck-close]").forEach(function (b) { b.addEventListener("click", cerrar); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape" && abierto) cerrar(); });
 
   $("#qMenos").addEventListener("click", function () { cantidad = Math.max(1, cantidad - 1); totales(); });
   $("#qMas").addEventListener("click", function () { cantidad = Math.min(MAX, cantidad + 1); totales(); });
-  $$("input[name=zona]", form).forEach(function (r) {
-    r.addEventListener("change", function () {
-      var lima = zona() === "lima_fast";
-      $("#zLima").hidden = !lima; $("#zNac").hidden = lima; totales();
-    });
-  });
-  form.elements.dep.addEventListener("change", function () {
-    var d = form.elements.dep.value, p = form.elements.prov;
-    opciones(p, d && ubigeo ? Object.keys(ubigeo[d]).sort(function (a, b) { return a.localeCompare(b, "es"); }) : [], "Elige…");
-    p.disabled = !d;
-  });
 
-  function marcar(campo, mal) { campo.classList.toggle("invalid", mal); return mal; }
-  function validar() {
-    var f = form.elements, mal = [];
+  // Paso 1 -> 2
+  function validarPaso1() {
+    var mal = [];
     if (marcar(f.nombre, f.nombre.value.trim().length < 3)) mal.push("tu nombre");
     if (marcar(f.celular, f.celular.value.replace(/\D/g, "").length < 9)) mal.push("un celular de 9 dígitos");
+    if (marcar(f.dni, f.dni.value.replace(/\D/g, "").length < 8)) mal.push("tu DNI");
     if (marcar(f.correo, !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.correo.value.trim()))) mal.push("un correo válido");
-    if (zona() === "lima_fast") {
-      if (marcar(f.dist, !f.dist.value)) mal.push("el distrito");
-      if (marcar(f.dir, f.dir.value.trim().length < 5)) mal.push("tu dirección");
-    } else {
-      if (marcar(f.dep, !f.dep.value)) mal.push("el departamento");
-      if (marcar(f.prov, !f.prov.value)) mal.push("la provincia");
-      if (marcar(f.dni, f.dni.value.replace(/\D/g, "").length < 8)) mal.push("tu DNI");
-    }
     return mal;
   }
+  $("#ckNext").addEventListener("click", function () {
+    var mal = validarPaso1();
+    if (mal.length) { error(1, "Revisa " + mal.join(", ") + "."); return; }
+    error(1, ""); paso(2);
+  });
+  $("#ckBack").addEventListener("click", function () { paso(1); });
 
+  // Envio: departamento -> provincia -> agencia Shalom (con direccion y horario)
+  function listaAgencias() {
+    var d = f.dep.value, p = f.prov.value;
+    return (d && p && shalom && shalom[d] && shalom[d][p]) || [];
+  }
+  function dibujarAgencias() {
+    var caja = $("#agencias"), lista = $("#agList"), ags = listaAgencias();
+    lista.innerHTML = ""; agencia = null;
+    caja.hidden = !(f.dep.value && f.prov.value);
+    if (caja.hidden) return;
+    if (!ags.length) {
+      lista.appendChild(el("p", "No hay agencia Shalom registrada en esta provincia todavía: coordinamos el punto de entrega más cercano contigo por WhatsApp.", "ag-none"));
+      return;
+    }
+    ags.forEach(function (a, i) {
+      var rotulo = el("label", "", "ag");
+      var r = el("input"); r.type = "radio"; r.name = "agencia"; r.value = String(i);
+      var t = el("span");
+      t.appendChild(el("b", a.zona));
+      t.appendChild(el("small", a.direccion));
+      t.appendChild(el("small", a.horario + (a.telefono ? " · " + a.telefono : "")));
+      rotulo.appendChild(r); rotulo.appendChild(t); lista.appendChild(rotulo);
+      r.addEventListener("change", function () { agencia = a; $("#ckErr2").hidden = true; });
+    });
+    if (ags.length === 1) { lista.querySelector("input").checked = true; agencia = ags[0]; }
+  }
+  f.dep.addEventListener("change", function () {
+    var d = f.dep.value;
+    opciones(f.prov, d && ubigeo ? Object.keys(ubigeo[d]).sort(alfa) : [], "Elige…");
+    f.prov.disabled = !d; dibujarAgencias();
+  });
+  f.prov.addEventListener("change", dibujarAgencias);
+
+  // Confirmar
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-    var mal = validar();
-    if (mal.length) { mostrarError("Revisa " + mal.join(", ") + "."); return; }
-    mostrarError("");
-    var f = form.elements, lima = zona() === "lima_fast", pago = f.pago.value;
+    if ($("#ckStep2").hidden) { $("#ckNext").click(); return; } // Enter en el paso 1 = Continuar
+    var mal = [];
+    if (marcar(f.dep, !f.dep.value)) mal.push("el departamento");
+    if (marcar(f.prov, !f.prov.value)) mal.push("la provincia");
+    if (mal.length) { error(2, "Elige " + mal.join(" y ") + "."); return; }
+    if (listaAgencias().length && !agencia) { error(2, "Elige la agencia Shalom donde recogerás tu pedido."); return; }
+    error(2, "");
+    var pago = f.pago.value;
     var body = {
       customerName: f.nombre.value.trim(),
       customerEmail: f.correo.value.trim(),
       customerPhone: f.celular.value.trim(),
-      deliveryZone: zona(),
+      dni: f.dni.value.replace(/\D/g, ""),
+      deliveryZone: "nacional",
       paymentProvider: pago,
       items: [{ quantity: cantidad }],
-      department: lima ? "Lima" : f.dep.value,
-      province: lima ? "Lima" : f.prov.value,
-      city: lima ? f.dist.value : f.prov.value,
-      address: lima ? f.dir.value.trim() : "Recojo en agencia Shalom de " + f.prov.value + " (se coordina por WhatsApp)",
-      dni: lima ? undefined : f.dni.value.replace(/\D/g, "")
+      department: f.dep.value,
+      province: f.prov.value,
+      city: agencia ? agencia.zona : f.prov.value,
+      address: agencia ? agencia.zona + " — " + agencia.direccion : "Recojo en agencia Shalom de " + f.prov.value + " (se coordina por WhatsApp)"
     };
     go.disabled = true; go.textContent = "REGISTRANDO…";
     fetch(API + "/api/orders", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) })
       .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
       .then(function (res) {
-        if (!res.ok || !res.d.success) { mostrarError((res.d && res.d.error) || "No pudimos registrar tu pedido. Intenta de nuevo."); return; }
+        if (!res.ok || !res.d.success) { error(2, (res.d && res.d.error) || "No pudimos registrar tu pedido. Intenta de nuevo."); return; }
         exito(res.d.order, pago, body.customerName);
       })
-      .catch(function () { mostrarError("No hay conexión con la tienda. Intenta de nuevo o usa COMPRA DIRECTA por WhatsApp."); })
+      .catch(function () { error(2, "No hay conexión con la tienda. Intenta de nuevo o usa COMPRA DIRECTA por WhatsApp."); })
       .then(function () { go.disabled = false; go.textContent = "CONFIRMAR PEDIDO"; });
   });
-
-  function el(tag, texto, cls) { var n = document.createElement(tag); if (texto) n.textContent = texto; if (cls) n.className = cls; return n; }
 
   function exito(order, pago, nombre) {
     var total = soles(order.amount);
     track("PlaceAnOrder", { content_id: "memoai", content_name: "NoteAI", value: order.amount, currency: "PEN", quantity: cantidad });
-    $("#ckStep1").hidden = true; $("#ckStep2").hidden = false;
-    ck.querySelector(".ck-box").scrollTop = 0;
+    paso(3);
     $("#okId").textContent = order.id; $("#okTotal").textContent = total;
+    $("#okAg").textContent = agencia ? "Recoges en Shalom " + agencia.zona + ": " + agencia.direccion + " (" + agencia.horario + ")" : "";
     var caja = $("#okPago"); caja.innerHTML = "";
-    var metodo = pago === "yape" ? "Yape" : pago === "plin" ? "Plin" : "contraentrega";
-    var texto;
+    var texto, lugar = agencia ? " Recojo en Shalom " + agencia.zona + "." : "";
     if (pago === "whatsapp") {
       $("#okTitulo").textContent = "¡Pedido recibido!";
       caja.appendChild(el("p", "Escríbenos por WhatsApp para coordinar la entrega. Pagas al recibir tu NoteAI."));
-      texto = "Hola, soy " + nombre + ". Hice el pedido " + order.id + " de NoteAI por " + total + " y quiero coordinar la contraentrega.";
+      texto = "Hola, soy " + nombre + ". Hice el pedido " + order.id + " de NoteAI por " + total + " y quiero coordinar la contraentrega." + lugar;
     } else {
       $("#okTitulo").textContent = "Último paso: realiza tu pago";
-      var numero = ajustes && (pago === "yape" ? ajustes.yapeNumber : ajustes.plinNumber);
-      if (numero) {
-        caja.appendChild(el("p", "Paga " + total + " por " + metodo + " a:"));
-        caja.appendChild(el("p", numero, "num"));
-        caja.appendChild(el("p", ajustes.yapeName || ""));
-        var qr = el("img"); qr.src = "/assets/qr-" + pago + ".jpeg"; qr.alt = "Código QR de " + metodo; caja.appendChild(qr);
+      caja.appendChild(el("p", "Paga " + total + " por Yape o Plin:"));
+      if (ajustes) {
+        var qrs = el("div", "", "qrs");
+        [["yape", "Yape", ajustes.yapeNumber], ["plin", "Plin", ajustes.plinNumber]].forEach(function (m) {
+          var c = el("div"); c.appendChild(el("b", m[1])); c.appendChild(el("div", m[2], "num"));
+          var qr = el("img"); qr.src = "/assets/qr-" + m[0] + ".jpeg"; qr.alt = "Código QR de " + m[1]; qr.loading = "lazy"; c.appendChild(qr);
+          qrs.appendChild(c);
+        });
+        caja.appendChild(qrs);
+        if (ajustes.yapeName) caja.appendChild(el("p", "A nombre de " + ajustes.yapeName));
       } else {
-        caja.appendChild(el("p", "Te enviamos el número de " + metodo + " por WhatsApp."));
+        caja.appendChild(el("p", "Te enviamos el número por WhatsApp."));
       }
       caja.appendChild(el("p", "Después envíanos la captura del pago por WhatsApp para confirmar tu pedido."));
-      texto = "Hola, soy " + nombre + ". Hice el pedido " + order.id + " de NoteAI por " + total + " y pagué por " + metodo + ". Te envío mi comprobante.";
+      texto = "Hola, soy " + nombre + ". Hice el pedido " + order.id + " de NoteAI por " + total + " y pagué por Yape/Plin. Te envío mi comprobante." + lugar;
     }
     $("#okWa").href = waLink(texto);
     $("#okWa").onclick = function () { track("Contact"); };
