@@ -27,10 +27,10 @@
 
 <!-- Pre-encabezado giratorio: una frase a la vez, para apurar la compra -->
 <div class="ticker" aria-live="polite">
-  <p class="on"><span>🚚</span> Envío gratis a todo el Perú</p>
-  <p><span>⚡</span> 60% OFF · la oferta termina en <b class="mono" data-cuenta>01:00:00</b></p>
-  <p><span>🛡️</span> Paga al recibir: contraentrega disponible</p>
-  <p><span>🔥</span> Precio de lanzamiento, hasta que se acabe el tiempo</p>
+  <p class="on"><svg class="ti" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>Envío gratis a todo el Perú</p>
+  <p><svg class="ti" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>60% de descuento · la oferta termina en <b class="mono" data-cuenta>01:00:00</b></p>
+  <p><svg class="ti" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>Paga con Yape, Plin o contraentrega</p>
+  <p><svg class="ti" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg>Precio de lanzamiento por tiempo limitado</p>
 </div>
 
 <main>
@@ -39,7 +39,6 @@
       <div class="hero-copy">
         <h1>Deja de tomar apuntes,<br><em>concéntrate en lo que realmente importa</em></h1>
         <p class="sub"><b>NoteAI</b> es la grabadora inteligente con IA que <b>transcribe, resume y organiza</b> automáticamente tus <b>reuniones, clases y entrevistas</b>.</p>
-        <p class="badge">🚚 Envío gratis a todo el Perú</p>
         <div class="price">
           <s>S/ 755</s><strong>S/ 299</strong><span class="off">60% OFF</span>
         </div>
@@ -82,7 +81,7 @@
       <article class="bcard hot">
         <span class="tag">Lo que más valoran</span>
         <span class="stat">95%</span><span class="statlbl">de precisión en español e inglés</span>
-        <h3>Transcribe y resume con IA</h3>
+        <h3>Resúmenes sin escribir nada</h3>
         <p>Tu resumen queda listo al instante: ideas clave, tareas y temas, organizados sin que levantes un dedo.</p>
       </article>
       <article class="bcard">
@@ -91,28 +90,25 @@
         <p>Toda la semana sin recargar ni borrar nada. Menos tiempo pasando en limpio, más tiempo para lo importante.</p>
       </article>
     </div>
-    <div class="cta center row">
-      <a class="btn btn-primary" data-comprar href="https://store.devmarkpe.com/producto/memoai?comprar=1">QUIERO MI NOTEAI</a>
-      <a class="btn btn-wa" data-wa data-contact href="#" target="_blank" rel="noopener">COMPRA DIRECTA</a>
-    </div>
   </section>
 
   <section class="section showcase">
     <div class="show">
-      <div class="phone">
-        <video id="demo" playsinline preload="none" poster="/assets/video-portada.jpg" src="/assets/memoai-demo.mp4"></video>
-        <button class="play" id="play" type="button" aria-label="Ver el video de NoteAI"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z" fill="currentColor"/></svg></button>
+      <div class="phone-wrap">
+        <div class="phone">
+          <video id="demo" playsinline preload="none" poster="/assets/video-portada.jpg" src="/assets/memoai-demo.mp4"></video>
+          <button class="play" id="play" type="button" aria-label="Ver el video de NoteAI"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z" fill="currentColor"/></svg></button>
+        </div>
       </div>
       <div class="show-info">
         <p class="eyebrow left">Míralo en acción</p>
-        <h2 class="h2 left">Así llega tu <em>NoteAI</em></h2>
-        <p class="lead">Mira cómo es por dentro: la caja, el equipo y lo fácil que es empezar a grabar el mismo día que lo recibes.</p>
-        <ul class="ticks">
-          <li><b>Listo para usar:</b> lo enciendes, abres la app y grabas.</li>
-          <li><b>Equipo físico con 64 GB:</b> miles de horas de audio guardadas.</li>
-          <li><b>App en Android y iOS:</b> transcripción y resumen automáticos.</li>
-          <li><b>Llega a todo el Perú:</b> envío gratis y pagas al recibir.</li>
-        </ul>
+        <h2 class="h2 left">Así de fácil: <em>grabas, sincronizas y listo</em></h2>
+        <p class="lead">Desde que abres la caja hasta tener tu primer resumen pasan solo unos minutos.</p>
+        <ol class="how">
+          <li><span class="n">1</span><div><h3>Enciende y graba</h3><p>Un solo botón, sin configuraciones ni cables. Puedes grabar sin internet.</p></div></li>
+          <li><span class="n">2</span><div><h3>Sincroniza con la app</h3><p>Disponible para Android y iOS. El audio pasa a tu celular cuando tú quieras.</p></div></li>
+          <li><span class="n">3</span><div><h3>Recibe y comparte</h3><p>Transcripción, ideas clave y tareas listas para exportar a PDF, Word o TXT.</p></div></li>
+        </ol>
         <div class="cta">
           <a class="btn btn-primary" data-comprar href="https://store.devmarkpe.com/producto/memoai?comprar=1">COMPRAR AHORA</a>
           <a class="btn btn-wa" data-wa data-contact href="#" target="_blank" rel="noopener">COMPRA DIRECTA</a>
@@ -123,7 +119,7 @@
 
   <section class="section" id="descuento">
     <div class="flash">
-      <p class="flash-tag">⚡ Oferta por tiempo limitado</p>
+      <p class="flash-tag">Oferta por tiempo limitado</p>
       <h2>60% de descuento <em>solo ahora</em></h2>
       <p class="flash-sub">Cuando el tiempo llegue a cero, el precio de lanzamiento puede dejar de estar disponible.</p>
       <div class="clock" role="timer" aria-label="Tiempo restante de la oferta">
@@ -136,7 +132,6 @@
         <a class="btn btn-primary light" data-comprar href="https://store.devmarkpe.com/producto/memoai?comprar=1">COMPRAR AHORA</a>
         <a class="btn btn-wa" data-wa data-contact href="#" target="_blank" rel="noopener">COMPRA DIRECTA</a>
       </div>
-      <ul class="flash-incl"><li>🎙️ Grabadora NoteAI</li><li>💾 64 GB</li><li>📱 App con IA</li><li>🚚 Envío gratis</li><li>🛡️ Contraentrega</li></ul>
     </div>
   </section>
 </main>
@@ -182,7 +177,7 @@
           <button type="button" id="qMenos" aria-label="Quitar una unidad">−</button><output id="qVal">1</output><button type="button" id="qMas" aria-label="Agregar una unidad">+</button>
         </div>
       </div>
-      <p class="free">🚚 Envío gratis a todo el Perú</p>
+      <p class="free">Envío gratis a todo el Perú</p>
       <label>Nombre completo<input name="nombre" autocomplete="name" required maxlength="160"></label>
       <div class="two">
         <label>Celular<input name="celular" type="tel" inputmode="tel" autocomplete="tel" required maxlength="40"></label>
