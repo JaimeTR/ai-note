@@ -192,12 +192,24 @@
         </div>
       </div>
       <p class="free">Envío gratis a todo el Perú</p>
-      <label>Nombre completo<input name="nombre" autocomplete="name" required maxlength="160"></label>
+      <label>Nombre completo
+        <span class="fld"><svg class="fi" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg><input name="nombre" autocomplete="name" required maxlength="80" placeholder="Como figura en tu DNI"></span>
+        <small class="fe" data-fe="nombre"></small>
+      </label>
       <div class="two">
-        <label>Celular<input name="celular" type="tel" inputmode="tel" autocomplete="tel" required maxlength="40"></label>
-        <label>DNI<input name="dni" inputmode="numeric" maxlength="12" autocomplete="off" placeholder="Para recoger tu pedido"></label>
+        <label>Celular
+          <span class="fld fld-tel"><svg class="fi" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="pre"><svg class="flag" viewBox="0 0 3 2" width="22" height="15" aria-hidden="true"><rect width="3" height="2" fill="#d91023"/><rect x="1" width="1" height="2" fill="#fff"/></svg>+51</span><input name="celular" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="11" placeholder="987654321"></span>
+          <small class="fe" data-fe="celular"></small>
+        </label>
+        <label>DNI
+          <span class="fld"><svg class="fi" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2.5"/><circle cx="8.5" cy="11" r="2"/><path d="M5.5 16c.6-1.4 1.7-2 3-2s2.4.6 3 2M14.5 10h4M14.5 14h4"/></svg><input name="dni" inputmode="numeric" autocomplete="off" maxlength="8" placeholder="8 dígitos"></span>
+          <small class="fe" data-fe="dni"></small>
+        </label>
       </div>
-      <label>Correo<input name="correo" type="email" autocomplete="email" required maxlength="160" placeholder="Aquí te llega la confirmación"></label>
+      <label>Correo
+        <span class="fld"><svg class="fi" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2.5"/><path d="m22 7-9.2 6a1.6 1.6 0 0 1-1.6 0L2 7"/></svg><input name="correo" type="email" inputmode="email" autocomplete="email" maxlength="120" placeholder="nombre@gmail.com"></span>
+        <small class="fe" data-fe="correo"></small>
+      </label>
       <p class="ck-err" id="ckErr1" role="alert" hidden></p>
       <button class="btn btn-primary ck-go" id="ckNext" type="button">CONTINUAR</button>
     </section>

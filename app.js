@@ -140,14 +140,51 @@
   $("#qMenos").addEventListener("click", function () { cantidad = Math.max(1, cantidad - 1); totales(); });
   $("#qMas").addEventListener("click", function () { cantidad = Math.min(MAX, cantidad + 1); totales(); });
 
-  // Paso 1 -> 2
+  // Paso 1: cada campo se limpia mientras se escribe (solo lo permitido), se marca en verde si esta bien
+  // y explica el error debajo si no. Celular: 9 digitos que empiezan con 9 (+51 va fijo). DNI: 8 digitos.
+  var REGLAS = {
+    nombre: {
+      limpiar: function (v) { return v.replace(/[0-9_@#$%^&*()+=<>{}\[\]\\|\/~`!?;:"]/g, "").replace(/\s{2,}/g, " "); },
+      ok: function (v) { return /^\p{L}[\p{L}\s'.-]{2,}$/u.test(v.trim()) && /\s/.test(v.trim()); },
+      msg: "Escribe tu nombre y apellido, solo con letras."
+    },
+    celular: {
+      limpiar: function (v) { var d = v.replace(/\D/g, ""); if (d.length > 9 && d.indexOf("51") === 0) d = d.slice(2); return d.slice(0, 9); },
+      ok: function (v) { return /^9\d{8}$/.test(v); },
+      msg: "El celular tiene 9 números y empieza con 9."
+    },
+    dni: {
+      limpiar: function (v) { return v.replace(/\D/g, "").slice(0, 8); },
+      ok: function (v) { return /^\d{8}$/.test(v); },
+      msg: "El DNI tiene 8 números."
+    },
+    correo: {
+      limpiar: function (v) { return v.replace(/\s/g, "").toLowerCase(); },
+      ok: function (v) { return /^[a-z0-9._%+'-]+@[a-z0-9-]+(\.[a-z0-9-]+)*\.[a-z]{2,}$/.test(v); },
+      msg: "Escribe un correo válido, por ejemplo nombre@gmail.com."
+    }
+  };
+  function estado(nombre, mostrarError) {
+    var r = REGLAS[nombre], campo = f[nombre], caja = campo.closest(".fld"), msg = $('[data-fe="' + nombre + '"]');
+    var bien = r.ok(campo.value);
+    caja.classList.toggle("good", bien);
+    if (bien || mostrarError) { caja.classList.toggle("bad", !bien && !!campo.value || (!bien && mostrarError)); msg.textContent = bien ? "" : (campo.value ? r.msg : "Este dato es obligatorio."); }
+    return bien;
+  }
+  Object.keys(REGLAS).forEach(function (n) {
+    var campo = f[n];
+    campo.addEventListener("input", function () {
+      var limpio = REGLAS[n].limpiar(campo.value);
+      if (limpio !== campo.value) campo.value = limpio;
+      var caja = campo.closest(".fld");
+      if (REGLAS[n].ok(campo.value)) estado(n, false); else { caja.classList.remove("good"); }
+    });
+    campo.addEventListener("blur", function () { if (campo.value) estado(n, true); });
+  });
   $("#ckNext").addEventListener("click", function () {
-    var mal = [];
-    if (marcar(f.nombre, f.nombre.value.trim().length < 3)) mal.push("tu nombre");
-    if (marcar(f.celular, f.celular.value.replace(/\D/g, "").length < 9)) mal.push("un celular de 9 dígitos");
-    if (marcar(f.dni, f.dni.value.replace(/\D/g, "").length < 8)) mal.push("tu DNI");
-    if (marcar(f.correo, !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.correo.value.trim()))) mal.push("un correo válido");
-    if (mal.length) { error(1, "Revisa " + mal.join(", ") + "."); return; }
+    var primero = null;
+    Object.keys(REGLAS).forEach(function (n) { if (!estado(n, true) && !primero) primero = f[n]; });
+    if (primero) { primero.focus(); return; }
     error(1, ""); paso(2);
   });
   $("#ckBack2").addEventListener("click", function () { paso(1); });
@@ -248,7 +285,7 @@
   $$("input[name=pago]", form).forEach(function (r) { r.addEventListener("change", dibujarPago); });
 
   function textoPedido(saludo) {
-    return saludo + " Soy " + f.nombre.value.trim() + " (cel. " + f.celular.value.trim() + ", DNI " + f.dni.value.trim() + "). " +
+    return saludo + " Soy " + f.nombre.value.trim() + " (cel. +51 " + f.celular.value + ", DNI " + f.dni.value.trim() + "). " +
       "Pedido de " + cantidad + " NoteAI por " + soles(total()) + ", pago por " + (f.pago.value === "whatsapp" ? "contraentrega" : "Yape/Plin") +
       (agencia ? ". Recojo en Shalom " + agencia.zona + ": " + agencia.direccion : ". Recojo en agencia Shalom de " + f.prov.value + ", " + f.dep.value) + ".";
   }
@@ -262,7 +299,7 @@
     var body = {
       customerName: f.nombre.value.trim(),
       customerEmail: f.correo.value.trim(),
-      customerPhone: f.celular.value.trim(),
+      customerPhone: "+51 " + f.celular.value,
       dni: f.dni.value.replace(/\D/g, ""),
       deliveryZone: "nacional",
       paymentProvider: pago,
